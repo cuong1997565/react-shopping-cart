@@ -1,5 +1,22 @@
 import React, { Component } from 'react';
+import * as Message from '../constants/Message';
 class Product extends Component {
+    showRatings = (rating) => {
+        var result = [];
+        for(var i = 1; i<= rating; i++) {
+             result.push(<i key={i} className="fa fa-star"></i>);
+        }
+        for(var j = 1; j<= (5-rating); j++){
+            result.push(<i key={i + j} className="fa fa-star-o"></i>)
+        }
+
+        return result;
+    }
+
+    onAddToCart = (product) => {
+        this.props.onAddToCart(product);
+        this.props.onChangeMessage(Message.MSG_ADD_TO_CART_SUCCESS);
+    }
     render() {
         var { product } = this.props;
 
@@ -31,7 +48,13 @@ class Product extends Component {
                         <div className="card-footer">
                             <span className="left"> {product.price} $</span>
                             <span className="right">
-                                <a className="btn-floating blue-gradient" data-toggle="tooltip" data-placement="top" title="" href="#/" data-original-title="Add to Cart">
+                                <a 
+                                className="btn-floating blue-gradient"
+                                data-toggle="tooltip" 
+                                data-placement="top" 
+                                title="" href="#/" 
+                                data-original-title="Add to Cart"
+                                onClick={ () => this.onAddToCart(product) }>
                                     <i className="fa fa-shopping-cart"></i>
                                 </a>
                             </span>
@@ -40,18 +63,6 @@ class Product extends Component {
                 </div>
             </div>
         );
-    }
-
-    showRatings = (rating) => {
-        var result = [];
-        for(var i = 1; i<= rating; i++) {
-             result.push(<i key={i} className="fa fa-star"></i>);
-        }
-        for(var j = 1; j<= (5-rating); j++){
-            result.push(<i key={i + j} className="fa fa-star-o"></i>)
-        }
-
-        return result;
     }
 }
 
